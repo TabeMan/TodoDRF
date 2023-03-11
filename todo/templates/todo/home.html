@@ -13,12 +13,7 @@
     >
       {{ todo.title }}
       <div class="float-end">
-        <form method="POST" action="">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-sm btn-outline-danger">
-            <i class="bi bi-trash"></i>
-          </button>
-        </form>
+      <a href="{% url 'todo-complete' todo.id %}"><button type="button" class="btn btn-outline-success">Completed</button></a>
       </div>
     </li>
     {% empty %}

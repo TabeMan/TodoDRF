@@ -94,11 +94,14 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
     'ROTATE_REFRESH_TOKENS': True,
 }
 
+ACCESS_TOKEN = config('ACCESS_TOKEN')
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4MTE1MDM0NCwiaWF0IjoxNjc4NTU4MzQ0LCJqdGkiOiJkMTVmOGM1MmQ5MzQ0YWE3YWE0NTEzNGUxNzZmNjQ3MyIsInVzZXJfaWQiOjF9.OXrebsR0BhZkOlxltl7p5k2EmPrd8a69oOhSeQskQeI
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
