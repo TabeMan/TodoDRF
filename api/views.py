@@ -6,6 +6,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from todo.models import Todo
 from .serializers import TodoSerializer
+from profiles.models import Profile
+from .serializers import ProfileSerializer
 
 
 class TodoListCreateView(generics.ListCreateAPIView):
@@ -15,11 +17,12 @@ class TodoListCreateView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+        return self.queryset.filter(profile=self.request.user.profile)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-        
+        profile = self.request.user.profile
+        serializer.save(profile=profile)
+
 
 class TodoRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Todo.objects.all()
@@ -28,8 +31,15 @@ class TodoRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     # authentication_classes = [authentication.TokenAuthentication]
 
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+        return self.queryset.filter(profile=self.request.user.profile)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-        
+        profile = self.request.user.profile
+        serializer.save(profile=profile)
+
+
+class ProfileRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [JWTAuthentication]

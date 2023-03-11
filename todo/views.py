@@ -22,15 +22,15 @@ class Home(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         # Get the current user
-        user = self.request.user
+        profile = self.request.user.profile
 
         # Prepare the data to be sent to the API
         data = {
             'title': form.cleaned_data['title'],
             'description': form.cleaned_data['description'],
-            'user': user.id  # Include the current user ID
+            'profile': profile.id  # Include the current user ID
         }
-
+        
         # Send a POST request to the API to create a new to-do item
         response = requests.post(
             'http://localhost:8000/api/', data=data, headers=HEADERS)
