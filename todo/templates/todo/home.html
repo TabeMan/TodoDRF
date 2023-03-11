@@ -1,0 +1,29 @@
+{% extends 'index.html' %} {% block content %}
+<div class="container mt-4">
+  <h1 class="mb-4">My To-Do List</h1>
+  <form method="POST" action="{% url 'home' %}">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary mt-3">Add Item</button>
+  </form>
+  <hr />
+  <ul class="list-group">
+    {% for todo in todos %}
+    <li
+      class="list-group-item{% if todo.completed %} list-group-item-success{% endif %}"
+    >
+      {{ todo.title }}
+      <div class="float-end">
+        <form method="POST" action="">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-danger">
+            <i class="bi bi-trash"></i>
+          </button>
+        </form>
+      </div>
+    </li>
+    {% empty %}
+    <li class="list-group-item">No items yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
